@@ -1,0 +1,268 @@
+---
+title: "CIND 123 - Data Analytics: Basic Methods"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+<center> <h1> Assignment 2 (10%) </h1> </center>
+<center> <h3> [AMARPREET KAUR] </h3> </center>
+<center> <h3> [D30-THURSDAY & 501213603] </h3> </center>
+---
+
+# Instructions 
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. Review this website for more details on using R Markdown <http://rmarkdown.rstudio.com>.
+
+Use RStudio for this assignment. Complete the assignment by inserting your  \texttt{R} code wherever you see the string "#INSERT YOUR ANSWER HERE".
+
+When you click the **Knit** button, a document (PDF, Word, or HTML format) will be generated that includes both the assignment content as well as the output of any embedded R code chunks.
+
+**NOTE**: YOU SHOULD NEVER HAVE `install.packages` IN YOUR CODE; OTHERWISE, THE `Knit` OPTION WILL GIVE AN ERROR. COMMENT OUT ALL PACKAGE INSTALLATIONS.
+
+Submit **both**  the `rmd` and generated `output` files. Failing to submit both files will be subject to mark deduction.  
+
+## Sample Question and Solution
+
+Use `seq()` to create the vector $(3, 5, \dots, 29)$.
+
+```{r}
+seq(3, 30, 2)
+seq(3, 29, 2)
+```
+
+
+
+
+# Question 1 (40 points)
+
+The Titanic Passenger Survival Data Set provides information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic." The dataset is available from the Department of Biostatistics at the Vanderbilt University School of Medicine (https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv) in several formats. store the Titanic Data Set into the variable `titanic_train` using the following commands. 
+
+
+```{r}
+#install.packages("titanic")
+library(titanic)
+titanic_train <- read.csv(file = "https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv", stringsAsFactors = F)
+summary(titanic_train)
+
+```
+
+1.a) Extract the columns `name`, `sex`, `age`, `fare`, `survived`, `embarked` into a new data frame named `titanicSubset` and show its `head`. 
+
+(5 points)
+
+```{r}
+titanicSubset <- data.frame(titanic_train$name,titanic_train$sex,titanic_train$age,titanic_train$fare,titanic_train$survived,titanic_train$embarked)
+colnames(titanicSubset) <- c("name","sex","age","fare","survived", "embarked")
+head(titanicSubset)
+```
+
+1.b) 
+Categorical data: Use the `count()` function from the `dplyr` package or `table()` function to display the total number of passengers within each Ticket Class `Pclass`.    
+
+(5 points)
+```{r}
+#Install dplyr package
+#install.packages("dplyr")                  
+#Load dplyr package
+library("dplyr")
+titanic_train %>% group_by(pclass) %>% count(n =n()) 
+#Another Method 
+count(titanic_train,titanic_train$pclass, wt=NULL, sort=FALSE, name=NULL)
+
+```
+
+
+1.c) Pivot Table: In a data frame, show the number of survived/not survived people per gender. In other words, the table should have three columns: `sex`, `survived`, and `n` (i.e., the count per each case).
+
+HINT: Use `count()` and `group_by()` functions from the `dplyr` package to calculate the number of survived/not survived cases by `sex`. `group_by()` should be used first and then pipe `%>%`the result to `count()` to calculate the output. 
+
+(5 points)
+```{r}
+titanic_train %>% group_by(sex, survived) %>% count()
+```
+
+
+1.d) Use the aggregate() function to calculate the 'survivalCount' of each `sex` and calculate the survival rate of each sex (i.e., the percentage of survived people per gender). Then draw the conclusion on which sex has the higher survival rate. 
+
+OPTIONAL: try to do the same task using `group_by`, `summarize`, and `mean`.
+
+ (5 points)
+```{r}
+#Survived count of males and females
+aggregate((titanic_train$survived), by = list(titanic_train$sex), FUN = sum)
+#Survival rate per gender(in percentage)
+survivalrate <- aggregate((titanic_train$survived*100), by = list(titanic_train$sex), FUN = mean)
+print(survivalrate)
+#Survival rate of women is higher than men, hence woman are more likely to survive
+```
+
+
+1.e) Using boxplot to display the distribution of `fare` for each class (`pclass`) and infer which class is the wealthiest.
+
+(5 points)
+```{r}
+boxplot(titanic_train$fare~titanic_train$pclass, xlab='PClass',ylab='Age',col=c("yellow","pink","red"), main='Boxplot Distribution for fare in each class')
+
+# It is clearly seen from the boxplot that Pclass 1 is the wealthiest.
+```
+
+
+1.f)
+Calculate the average fare per class and describe if the calculation agrees with the box plot.
+
+(5 points)
+```{r}
+AverageFarePerClass <- aggregate(fare~pclass,titanic_train, mean)
+print(AverageFarePerClass)
+
+# Values calculated from the "aggregate"  and "means" formula sounds same as boxplot. Hence, both gives same results.
+
+
+```
+
+
+1.g) Use the `for` loop and `if` control statements to list the men's names whose ages are above 50 that embarked from `C` (Cherbourg) on the Titanic. 
+
+ (10 points)
+```{r}
+for( i in 1:(length(titanic_train$sex)))
+  if(titanic_train$age[i] > 50 & !
+     is.na(titanic_train$age[i]) &
+     titanic_train$sex[i] == "male" &
+     titanic_train$embarked[i] == "C")
+    print(titanic_train$name[i])
+
+```
+
+
+
+
+# Question 2 (20 points)
+
+30 engines work together in a sequence. The historical data shows that the probability of each engine's failure is 0.2. We know that if one engine fails, the whole system stops.
+
+2.a)  What is the probability that the system operates without failure? 
+
+(5 points)
+```{r}
+dbinom(30,30,0.8)
+```
+
+2.b) Use the Binomial approximation to calculate the probability that at least 10 engines are defective?
+
+(5 points)
+```{r}
+pbinom(9, size=30, prob=.2, lower.tail = F)
+```
+
+2.c) Assume we pick engines A and B from the same set of engines. Given the probability of $P(\text{A=defective} \cap \text{B=not defective})=0.16$, compute the conditional probability that engine A is defective given the fact that engine B is not defective (i.e., $P(\text{A=defective}|\text{B=not defective})$. From the result, discuss if engines A and B are dependent or not.
+
+(10 points)
+```{r}
+#Probabilities given in th Question
+#Probability of A defective is 0.2
+pA<- 0.2
+#Probability of B defective is 0.2
+pB<- 0.2
+#Probability of B  not defective is 0.8 ( 1-pB)
+pnotB<- 0.8 #( 1-pB)
+#Probability of A defective and not B
+pA_notB<- 0.16
+
+#Define function for Bayes' Theorem
+bayesTheorem <- function(pnotB,pA_notB) {
+  pAgivennotB<- pA_notB/pnotB
+  return(pAgivennotB)
+}
+#Call function to calculate conditional probability:Probability of A defective and not B
+bayesTheorem(pnotB,pA_notB)
+# Probability of A defective:
+#From bayesTheorem formula :P(A|notB) = 0.2
+#Directly from values given in Questions:P(A)= 0.2
+#It satisfy the rule : A and notB are independent if and only if P(A|notB) = P(A) Hence, events are independent.
+
+```
+
+
+# Question 3 (25 points)
+
+On average, Sarah visits her parents six times a week. 
+
+3.a) Find the probabilities that she visits her parents at most five times a week? 
+
+(5 points)
+```{r}
+ppois(5, lambda = 6, lower.tail = T)
+```
+
+
+3.b) Find the probability that Sarah visits her parents at least twice a week?
+
+(5 points)
+```{r}
+ppois(1,lambda = 6, lower.tail = F) 
+```
+
+
+3.c)
+Comparing the similarity between Binomial and Poisson distribution.
+
+1) Create 50,000 samples for a Binomial random variable using parameters described in Question 2.
+
+2) Create 50,000 samples for a Poisson random variable using parameters described in Question 3.
+
+3) Illustrate how well the Poisson probability distribution approximates the Binomial probability distribution.
+
+HINT: You may use `multhist()` from the `plotrix` package to show their histogram next to each other, or you can create two separate histogram plots with the same x and y axis ranges. 
+
+(15 points@ 5 points each)
+```{r}
+#1 50,000 samples for a Binomial random variable
+rbinom(50000,30,.2)
+
+#2 50,000 samples for a Poisson random variable
+rpois(50000, lambda =6)
+#3 
+library(plotrix)
+Engine<-c(rbinom(50000,30,.2))
+Visit<-c(rpois(n=50000,lambda=6))
+x<-c(data.frame(Engine, Visit))
+plotrix::multhist(x, col=c("green","pink"), main="Comparative Histrogram")
+# From the graph it is clearly seen that the Poisson probability distribution approximates the Binomial probability distribution.
+```
+
+
+
+
+# Question 4 (15 points)
+
+Write scripts in $\texttt{R}$ to compute the following probabilities of a random variable following the normal distribution with the mean of 10 and the variance of 16.
+
+4.a) The probability that it lies between 8.2 and 9.2 (inclusive)
+
+(5 points)
+```{r}
+sd = sqrt(16)
+pnorm(9.2,10,4) - pnorm(8.2,10,4)
+```
+
+
+4.b) The probability that it is greater than 12.0
+
+(5 points)
+```{r}
+pnorm(12,10,4,lower.tail=FALSE)
+```
+
+
+4.c) The probability that it is less than 8.5 or greater than 11.5
+
+(5 points)
+```{r}
+1-(pnorm(11.5,10,4)-pnorm(8.5,10,4))
+```
+
+
+END of Assignment #2.

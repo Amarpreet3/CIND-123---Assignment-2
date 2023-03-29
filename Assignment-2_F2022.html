@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div>
+
+
+
+<h1 class="title toc-ignore">CIND 123 - Data Analytics: Basic
+Methods</h1>
+
+</div>
+
+
+<center>
+<h1>
+Assignment 2 (10%)
+</h1>
+</center>
+<center>
+<h3>
+[Insert your full name]
+</h3>
+</center>
+<center>
+<h3>
+[Insert course section &amp; student number]
+</h3>
+</center>
+<hr/>
+<div class="section level1">
+<h1>Instructions</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting
+syntax for authoring HTML, PDF, and MS Word documents. Review this
+website for more details on using R Markdown <a rel="noopener" href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>Use RStudio for this assignment. Complete the assignment by inserting
+your code wherever you see the string “#INSERT YOUR ANSWER HERE”.</p>
+<p>When you click the <strong>Knit</strong> button, a document (PDF,
+Word, or HTML format) will be generated that includes both the
+assignment content as well as the output of any embedded R code
+chunks.</p>
+<p><strong>NOTE</strong>: YOU SHOULD NEVER HAVE
+<code>install.packages</code> IN YOUR CODE; OTHERWISE, THE
+<code>Knit</code> OPTION WILL GIVE AN ERROR. COMMENT OUT ALL PACKAGE
+INSTALLATIONS.</p>
+<p>Submit <strong>both</strong> the <code>rmd</code> and generated
+<code>output</code> files. Failing to submit both files will be subject
+to mark deduction.</p>
+<div class="section level2">
+<h2>Sample Question and Solution</h2>
+<p>Use <code>seq()</code> to create the vector <span class="math inline">\((3, 5, \dots, 29)\)</span>.</p>
+<pre class="r"><code>seq(3, 30, 2)</code></pre>
+<pre><code>##  [1]  3  5  7  9 11 13 15 17 19 21 23 25 27 29</code></pre>
+<pre class="r"><code>seq(3, 29, 2)</code></pre>
+<pre><code>##  [1]  3  5  7  9 11 13 15 17 19 21 23 25 27 29</code></pre>
+</div>
+</div>
+<div class="section level1">
+<h1>Question 1 (40 points)</h1>
+<p>The Titanic Passenger Survival Data Set provides information on the
+fate of passengers on the fatal maiden voyage of the ocean liner
+“Titanic.” The dataset is available from the Department of Biostatistics
+at the Vanderbilt University School of Medicine (<a rel="noopener" href="https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv" class="uri">https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv</a>)
+in several formats. store the Titanic Data Set into the variable
+<code>titanic_train</code> using the following commands.</p>
+<pre class="r"><code># install.packages(&quot;titanic&quot;)
+# library(titanic)
+titanicDataset &lt;- read.csv(
+  &quot;https://biostat.app.vumc.org/wiki/pub/Main/DataSets/titanic3.csv&quot;,
+  stringsAsFactors = F)
+summary(titanicDataset)</code></pre>
+<pre><code>##      pclass         survived         name               sex           
+##  Min.   :1.000   Min.   :0.000   Length:1309        Length:1309       
+##  1st Qu.:2.000   1st Qu.:0.000   Class :character   Class :character  
+##  Median :3.000   Median :0.000   Mode  :character   Mode  :character  
+##  Mean   :2.295   Mean   :0.382                                        
+##  3rd Qu.:3.000   3rd Qu.:1.000                                        
+##  Max.   :3.000   Max.   :1.000                                        
+##                                                                       
+##       age            sibsp            parch          ticket         
+##  Min.   : 0.17   Min.   :0.0000   Min.   :0.000   Length:1309       
+##  1st Qu.:21.00   1st Qu.:0.0000   1st Qu.:0.000   Class :character  
+##  Median :28.00   Median :0.0000   Median :0.000   Mode  :character  
+##  Mean   :29.88   Mean   :0.4989   Mean   :0.385                     
+##  3rd Qu.:39.00   3rd Qu.:1.0000   3rd Qu.:0.000                     
+##  Max.   :80.00   Max.   :8.0000   Max.   :9.000                     
+##  NA&#39;s   :263                                                        
+##       fare            cabin             embarked             boat          
+##  Min.   :  0.000   Length:1309        Length:1309        Length:1309       
+##  1st Qu.:  7.896   Class :character   Class :character   Class :character  
+##  Median : 14.454   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   : 33.295                                                           
+##  3rd Qu.: 31.275                                                           
+##  Max.   :512.329                                                           
+##  NA&#39;s   :1                                                                 
+##       body        home.dest        
+##  Min.   :  1.0   Length:1309       
+##  1st Qu.: 72.0   Class :character  
+##  Median :155.0   Mode  :character  
+##  Mean   :160.8                     
+##  3rd Qu.:256.0                     
+##  Max.   :328.0                     
+##  NA&#39;s   :1188</code></pre>
+<p>1.a) Extract the columns <code>name</code>, <code>sex</code>,
+<code>age</code>, <code>fare</code>, <code>survived</code>,
+<code>embarked</code> into a new data frame named
+<code>titanicSubset</code> and show its <code>head</code>.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.b) Categorical data: Use the <code>count()</code> function from the
+<code>dplyr</code> package or <code>table()</code> function to display
+the total number of passengers within each Ticket Class
+<code>Pclass</code>.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.c) Pivot Table: In a data frame, show the number of survived/not
+survived people per gender. In other words, the table should have three
+columns: <code>sex</code>, <code>survived</code>, and <code>n</code>
+(i.e., the count per each case).</p>
+<p>HINT: Use <code>count()</code> and <code>group_by()</code> functions
+from the <code>dplyr</code> package to calculate the number of
+survived/not survived cases by <code>sex</code>. <code>group_by()</code>
+should be used first and then pipe <code>%&gt;%</code>the result to
+<code>count()</code> to calculate the output.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.d) Use the aggregate() function to calculate the ‘survivalCount’ of
+each <code>sex</code> and calculate the survival rate of each sex (i.e.,
+the percentage of survived people per gender). Then draw the conclusion
+on which sex has the higher survival rate.</p>
+<p>OPTIONAL: try to do the same task using <code>group_by</code>,
+<code>summarize</code>, and <code>mean</code>.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.e) Using boxplot to display the distribution of <code>fare</code>
+for each class (<code>pclass</code>) and infer which class is the
+wealthiest.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.f) Calculate the average fare per class and describe if the
+calculation agrees with the box plot.</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>1.g) Use the <code>for</code> loop and <code>if</code> control
+statements to list the men’s names whose ages are above 50 that embarked
+from <code>C</code> (Cherbourg) on the Titanic.</p>
+<p>(10 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+</div>
+<div class="section level1">
+<h1>Question 2 (20 points)</h1>
+<p>30 engines work together in a sequence. The historical data shows
+that the probability of each engine’s failure is 0.2. We know that if
+one engine fails, the whole system stops.</p>
+<p>2.a) What is the probability that the system operates without
+failure?</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>2.b) Use the Binomial approximation to calculate the probability that
+at least 10 engines are defective?</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>2.c) Assume we pick engines A and B from the same set of engines.
+Given the probability of <span class="math inline">\(P(\text{A=defective} \cap \text{B=not
+defective})=0.16\)</span>, compute the conditional probability that
+engine A is defective given the fact that engine B is not defective
+(i.e., <span class="math inline">\(P(\text{A=defective}|\text{B=not
+defective})\)</span>. From the result, discuss if engines A and B are
+dependent or not.</p>
+<p>(10 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+</div>
+<div class="section level1">
+<h1>Question 3 (25 points)</h1>
+<p>On average, Sarah visits her parents six times a week.</p>
+<p>3.a) Find the probabilities that she visits her parents at most five
+times a week?</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>3.b) Find the probability that Sarah visits her parents at least
+twice a week?</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>3.c) Comparing the similarity between Binomial and Poisson
+distribution.</p>
+<ol style="list-style-type: decimal;">
+<li><p>Create 50,000 samples for a Binomial random variable using
+parameters described in Question 2.</p></li>
+<li><p>Create 50,000 samples for a Poisson random variable using
+parameters described in Question 3.</p></li>
+<li><p>Illustrate how well the Poisson probability distribution
+approximates the Binomial probability distribution.</p></li>
+</ol>
+<p>HINT: You may use <code>multhist()</code> from the
+<code>plotrix</code> package to show their histogram next to each other,
+or you can create two separate histogram plots with the same x and y
+axis ranges.</p>
+<p>(15 points@ 5 points each)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+</div>
+<div class="section level1">
+<h1>Question 4 (15 points)</h1>
+<p>Write scripts in <span class="math inline">\(\texttt{R}\)</span> to
+compute the following probabilities of a random variable following the
+normal distribution with the mean of 10 and the variance of 16.</p>
+<p>4.a) The probability that it lies between 8.2 and 9.2 (inclusive)</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>4.b) The probability that it is greater than 12.0</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>4.c) The probability that it is less than 8.5 or greater than
+11.5</p>
+<p>(5 points)</p>
+<pre class="r"><code>#INSERT YOUR ANSWER HERE</code></pre>
+<p>END of Assignment #2.</p>
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="module" src="https://s.brightspace.com/lib/bsi/20.22.12-222/unbundled/mathjax.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					if (document.querySelector('math') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+						document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+							elm.setAttribute('style', 'display: block; height: 0.5rem;');
+						});
+
+						window.D2L.MathJax.loadMathJax({
+							'outputScale': 1.3,
+							'renderLatex': true
+						});
+					}
+				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/20.22.12-222/unbundled/prism.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script></body></html>
